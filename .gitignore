@@ -4,8 +4,7 @@ yarn-error.log
 dist/
 build/
 
-# OpenClaw data (local state)
-openclaw-data/
+# OpenClaw files (config and local
 
 # OS files
 .DS_Store
