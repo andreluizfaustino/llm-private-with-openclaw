@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-server
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+    command: ["serve"]
+    restart: unless-stopped
+
+  # Servidor OpenCLAW baseado na documentação oficial
+  openclaw:
+    image: openclaw/openclaw:latest
+    container_name: openclaw-server
+    ports:
+      - "18789:18789"
+    command: ["node", "openclaw.mjs", "gateway", "--allow-unconfigured"]
+    environment:
+      - OPENCLAW_GATEWAY_TOKEN=openclaw-local-token
+      - OPENCLAW_GATEWAY_MODE=local
+    depends_on:
+      - ollama
+    restart: unless-stopped
